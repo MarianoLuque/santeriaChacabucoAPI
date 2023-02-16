@@ -1,5 +1,5 @@
 const { matchedData } = require('express-validator')
-const {productosModel} = require('../models/index.js')
+const {productosModel, variantesModel} = require('../models/index.js')
 const {handleHttpError} = require('../utils/handleError.js')
 
 const getItems = async (req, res) => {
@@ -8,22 +8,17 @@ const getItems = async (req, res) => {
         const data = await productosModel.findAllData(page, limit, categoria)
         res.send({data})
     } catch (err) {
-        console.log(err)
         handleHttpError(res, 'ERROR GET PRODUCTOS', err, 500)
     }
 }
 const getItem = async (req, res) => {
     try {
         const {id} = req.params
-        console.log(id)
         const data = await productosModel.findOneData(id)
-        console.log(data)
         res.send({data})
     } catch (err) {
-        console.log(err)
         handleHttpError(res, 'ERROR GET PRODUCTO', err, 500)
     }
-    
 }
 const createItems = async (req, res) => {
     try {
@@ -32,7 +27,6 @@ const createItems = async (req, res) => {
         const data = await productosModel.create(body)
         res.send({data})
     } catch (err) {
-        console.log(err)
         handleHttpError(res, 'ERROR CREATE PRODUCTO', err, 500)
     }  
 }
@@ -44,7 +38,6 @@ const updateItems = async (req, res) => {
         const data = await productosModel.findOneAndUpdate({_id: id}, body, {new: true, upsert: false})
         res.send({data})
     } catch (err) {
-        console.log(err)
         handleHttpError(res, 'ERROR UPDATE PRODUCTOS', err, 500)
     }
 }
@@ -59,4 +52,22 @@ const deleteItems = async (req, res) => {
     }
 }
 
-module.exports = {getItems, getItem, updateItems, createItems, deleteItems}
+const updateItemsExcel = async (req, res) => {
+    try {
+        const {categoria} = req.query
+        const {productos} = req.body
+        productos.forEach(async producto => {
+            const data = await productosModel.findExcelData(producto.title, categoria)
+            data.variants.forEach((variante, index) => {
+                variantesModel.findByIdAndUpdate({_id: variante._id}, producto.price[index], {new: true, upsert: false})
+            });
+        });
+        
+        res.send({data})
+    } catch (err) {
+        console.log(err)
+        handleHttpError(res, 'ERROR ACTUALIZAR PRODUCTOS EXCEL', err, 500)
+    }
+}
+
+module.exports = {getItems, getItem, updateItems, createItems, deleteItems, updateItemsExcel}

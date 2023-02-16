@@ -18,15 +18,13 @@ const ProductScheme = new mongoose.Schema(
 ProductScheme.statics.findAllData = async function(page = null, limit = null, categoria = null) {
     
     const options = {};
+    const match = categoria ? { categoryId: categoria } : {};
     if (page && limit) {
         options.skip = (page - 1) * limit;
         options.limit = limit;
     }
-    if (categoria) {
-        options.category = categoria;
-    }
     options.sort = { title: 1 };
-    const product = await this.find({}, null, options)
+    const product = await this.find(match, null, options)
         .populate({
             path: 'categoryId',
             model: categoriasModel
@@ -41,6 +39,21 @@ ProductScheme.statics.findAllData = async function(page = null, limit = null, ca
 ProductScheme.statics.findOneData = async function(_id) {
 
     const product = await this.findOne({ _id })
+        .populate({
+            path: 'categoryId',
+            model: categoriasModel
+        })
+        .populate({
+            path: 'variants',
+            model: variantesModel
+        });
+    return product;
+}
+
+ProductScheme.statics.findExcelData = async function(titulo, categoria) {
+
+    const match = { categoryId: categoria, title:titulo };
+    const product = await this.findOne(match)
         .populate({
             path: 'categoryId',
             model: categoriasModel
