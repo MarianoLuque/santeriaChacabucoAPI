@@ -14,7 +14,7 @@ const getItem = async (req, res) => {
     try {
         req = matchedData(req)
         const {id} = req
-        const data = await categoriasModel.findById(id)
+        const data = await categoriasModel.findById({_id: id})
         res.send({data})
     } catch (err) {
         handleHttpError(res, 'ERROR GET CATEGORIA', err, 500)
@@ -33,7 +33,7 @@ const createItems = async (req, res) => {
 const updateItems = async (req, res) => {
     try {
         const {id, ...body} = matchedData(req)
-        const data = await categoriasModel.findOneAndUpdate(id, body, {new: true})
+        const data = await categoriasModel.findOneAndUpdate({_id: id}, body, {new: true})
         res.send({data})
     } catch (err) {
         handleHttpError(res, 'ERROR UPDATE CATEGORIA', err, 500)
@@ -43,7 +43,7 @@ const deleteItems = async (req, res) => {
     try {
         req = matchedData(req)
         const {id} = req
-        const data = await categoriasModel.findByIdAndDelete(id)
+        const data = await categoriasModel.findByIdAndDelete({_id: id})
         res.send({data})
     } catch (err) {
         handleHttpError(res, 'ERROR DELETE CATEGORIA', err, 500)

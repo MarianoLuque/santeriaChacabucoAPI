@@ -20,7 +20,7 @@ const getItems = async (req, res) => {
 const getItem = async (req, res) => {
     try {
         const {id} = matchedData(req)
-        const data = await storageModel.findById(id)
+        const data = await storageModel.findById({_id: id})
         res.send({data})
     } catch (err) {
         handleHttpError(res, 'ERROR EN STORAGE GET ITEM', err, 500)
@@ -48,7 +48,7 @@ const createItems = async (req, res) => {
 const deleteItems = async (req, res) => {
     try {
         const {id} = matchedData(req)
-        const dataFile = await storageModel.findById(id)
+        const dataFile = await storageModel.findById({_id: id})
         console.log(dataFile)
         const {filename} = dataFile
         console.log(filename)

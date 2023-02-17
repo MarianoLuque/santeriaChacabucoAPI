@@ -15,7 +15,7 @@ const ProductScheme = new mongoose.Schema(
     } 
 )
 
-ProductScheme.statics.findAllData = async function(page = null, limit = null, categoria = null) {
+ProductScheme.statics.findAllData = async function(page = null, limit = null, categoria = null, titulo = null, precio = null) {
     
     const options = {};
     const match = categoria ? { categoryId: categoria } : {};
@@ -23,8 +23,11 @@ ProductScheme.statics.findAllData = async function(page = null, limit = null, ca
         options.skip = (page - 1) * limit;
         options.limit = limit;
     }
-    options.sort = { title: 1 };
-    const product = await this.find(match, null, options)
+    if(titulo){
+        options.sort = { title: 1 };
+    }
+    
+    let product = await this.find(match, null, options)
         .populate({
             path: 'categoryId',
             model: categoriasModel
@@ -33,6 +36,14 @@ ProductScheme.statics.findAllData = async function(page = null, limit = null, ca
             path: 'variants',
             model: variantesModel
         });
+
+        /*if (precio) {
+            product = product.sort((a, b) => {
+                const aPrice = Math.min(...a.variants.map(v => v.price));
+                const bPrice = Math.min(...b.variants.map(v => v.price));
+                return aPrice - bPrice;
+            });
+        }*/
     return product;
 }
 

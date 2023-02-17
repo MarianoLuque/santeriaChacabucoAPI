@@ -13,7 +13,7 @@ const getItems = async (req, res) => {
 const getItem = async (req, res) => {
     try {
         const {id} = req.params
-        const data = await variantesModel.findById(id)
+        const data = await variantesModel.findById({_id: id})
         res.send({data})
     } catch (err) {
         handleHttpError(res, 'ERROR GET VARIANTE', err, 500)
@@ -31,9 +31,10 @@ const createItems = async (req, res) => {
 }
 const updateItems = async (req, res) => {
     try {
-        const {id, colorsId = [], sizesId = [], imagesId = [], price = 0} = req.body
+        const {id} = req.params
+        const {colorsId = [], sizesId = [], imagesId = [], price = null} = req.body
         const body = {colorsId, sizesId, imagesId, price}
-        const data = await variantesModel.findOneAndUpdate(id, body, {new: true})
+        const data = await variantesModel.findOneAndUpdate({_id: id}, body, {new: true})
         res.send({data})
     } catch (err) {
         handleHttpError(res, 'ERROR UPDATE VARIANTE', err, 500)
@@ -42,7 +43,7 @@ const updateItems = async (req, res) => {
 const deleteItems = async (req, res) => {
     try {
         const {id} = req.params
-        const data = await variantesModel.findByIdAndDelete(id)
+        const data = await variantesModel.findByIdAndDelete({_id: id})
         res.send({data})
     } catch (err) {
         handleHttpError(res, 'ERROR DELETE VARIANTE', err, 500)

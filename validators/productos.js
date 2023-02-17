@@ -11,4 +11,16 @@ const validatorGetItem = [
     }
 ]
 
-module.exports = {validatorGetItem}
+const validatorCreateItem = [
+    check('title')
+    .exists()
+    .notEmpty(),
+    check('categoryId')
+    .exists()
+    .notEmpty(),
+    (req, res, next) => {
+        return validateResults(req, res, next)
+    }
+]
+
+module.exports = {validatorGetItem, validatorCreateItem}
