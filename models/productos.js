@@ -1,6 +1,9 @@
 const mongoose = require('mongoose')
 const variantesModel = require ("./variantes.js")
 const categoriasModel = require("./categorias.js")
+const storagesModel = require("./storage.js")
+const coloresModel = require("./colores.js")
+const sizesModel = require("./sizes.js")
 
 const ProductScheme = new mongoose.Schema(
     {
@@ -34,8 +37,13 @@ ProductScheme.statics.findAllData = async function(page = null, limit = null, ca
         })
         .populate({
             path: 'variants',
-            model: variantesModel
-        });
+            model: variantesModel,
+            populate: [
+                { path: 'colorsId', model: coloresModel },
+                { path: 'sizesId', model: sizesModel },
+                { path: 'imagesId', model: storagesModel }
+              ]
+        })
 
         /*if (precio) {
             product = product.sort((a, b) => {
@@ -56,8 +64,13 @@ ProductScheme.statics.findOneData = async function(_id) {
         })
         .populate({
             path: 'variants',
-            model: variantesModel
-        });
+            model: variantesModel,
+            populate: [
+                { path: 'colorsId', model: coloresModel },
+                { path: 'sizesId', model: sizesModel },
+                { path: 'imagesId', model: storagesModel }
+              ]
+        })
     return product;
 }
 

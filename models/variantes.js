@@ -2,10 +2,10 @@ const mongoose = require('mongoose')
 
 const variantSchema = new mongoose.Schema(
     {
-        colorsId: [mongoose.Types.ObjectId], required: false,
-        sizesId:  [mongoose.Types.ObjectId], required: false,
-        imagesId: [mongoose.Types.ObjectId], required: false,
-        price:    Number, required: false
+        colorsId: {type: [mongoose.Types.ObjectId], ref: 'colores', required: false},
+        sizesId:  {type: [mongoose.Types.ObjectId], ref: 'sizes', required: false},
+        imagesId: {type: [mongoose.Types.ObjectId], ref: 'storages', required: false},
+        price:    {type: Number, required: false}
     },
     {
         timestamps: true,
