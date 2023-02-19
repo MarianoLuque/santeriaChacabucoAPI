@@ -21,7 +21,7 @@ const getItem = async (req, res) => {
 }
 const createItems = async (req, res) => {
     try {
-        const {colorsId = [], sizesId = [], imagesId = [], price = 0} = req.body
+        const {colorsId, sizesId, imagesId, price} = req.body
         const body = {colorsId, sizesId, imagesId, price}
         const data = await variantesModel.create(body)
         res.send({data})
@@ -32,7 +32,7 @@ const createItems = async (req, res) => {
 const updateItems = async (req, res) => {
     try {
         const {id} = req.params
-        const {colorsId = [], sizesId = [], imagesId = [], price = null} = req.body
+        const {colorsId, sizesId, imagesId, price} = req.body
         const body = {colorsId, sizesId, imagesId, price}
         const data = await variantesModel.findOneAndUpdate({_id: id}, body, {new: true})
         res.send({data})
