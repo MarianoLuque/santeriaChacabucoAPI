@@ -5,8 +5,8 @@ const {getItems, getItem, createItems, updateItems, deleteItems} = require('../c
 const authMiddleware = require('../middleware/session.js')
 
 
-router.get('/', authMiddleware, getItems)
-router.get('/:id', authMiddleware, validatorGetItem, getItem)
+router.get('/', getItems)
+router.get('/:id', validatorGetItem, getItem)
 router.post('/', authMiddleware, createItems)
 router.put('/:id', authMiddleware, validatorGetItem, updateItems)
 router.delete('/:id', authMiddleware, validatorGetItem, deleteItems)

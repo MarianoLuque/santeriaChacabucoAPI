@@ -4,8 +4,8 @@ const {validatorCreateItem, validatorGetItem} = require('../validators/sizes.js'
 const {getItems, getItem, createItems, updateItems, deleteItems} = require('../controllers/sizes.js')
 const authMiddleware = require('../middleware/session.js')
 
-router.get('/', authMiddleware, getItems)
-router.get('/:id', authMiddleware, validatorGetItem, getItem)
+router.get('/', getItems)
+router.get('/:id', validatorGetItem, getItem)
 router.post('/', authMiddleware, validatorCreateItem, createItems)
 router.put('/:id', authMiddleware, validatorCreateItem, validatorGetItem, updateItems)
 router.delete('/:id', authMiddleware, validatorGetItem, deleteItems)
