@@ -2,6 +2,7 @@ const { matchedData } = require('express-validator')
 const {storageModel} = require('../models/index.js')
 const {handleHttpError} = require('../utils/handleError.js')
 const {PUBLIC_URL} = require('../config/config.js')
+const {saveImage, deleteImage} = require('../utils/handleImages.js')
 const fs = require('fs')
 const path = require('path')
 
@@ -29,13 +30,13 @@ const getItem = async (req, res) => {
 const createItems = async (req, res) => {
     try{
         const file = req.files;
-        console.log(file)
         let response = []
         for(const pic of file) {
             const body = {
                 url: `${PUBLIC_URL}/${pic.filename}`,
                 filename: pic.filename,
             };
+            //saveImage(pic.filename)
             response.push(await storageModel.create(body));
         }
         res.send({ response })
@@ -49,11 +50,8 @@ const deleteItems = async (req, res) => {
     try {
         const {id} = matchedData(req)
         const dataFile = await storageModel.findById({_id: id})
-        console.log(dataFile)
         const {filename} = dataFile
-        console.log(filename)
         const filePath = path.resolve(ruta, filename)
-        console.log(filePath)
         await storageModel.findByIdAndDelete({_id: id})
         
         fs.unlinkSync(filePath)
