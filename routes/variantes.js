@@ -7,8 +7,8 @@ const checkRol = require('../middleware/rol.js')
 
 router.get('/', getItems)
 router.get('/:id', validatorGetItem, getItem)
-router.post('/', authMiddleware, checkRol, createItems)
-router.put('/:id', authMiddleware, checkRol, validatorGetItem, updateItems)
-router.delete('/:id', authMiddleware, checkRol, validatorGetItem, deleteItems)
+router.post('/', authMiddleware, checkRol["admin"], createItems)
+router.put('/:id', authMiddleware, checkRol["admin"], validatorGetItem, updateItems)
+router.delete('/:id', authMiddleware, checkRol["admin"], validatorGetItem, deleteItems)
 
 module.exports = router
