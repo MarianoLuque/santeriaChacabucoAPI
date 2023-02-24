@@ -6,9 +6,9 @@ const {handleHttpError} = require('../utils/handleError.js')
 
 const registerCtrl = async (req, res) => {
     try {
-        req = matchedData(req)
-        const password = await encrypt(req.password)
-        const body = {...req, password}
+        const{name, email, rol} = req.body
+        const password = await encrypt(req.body.password)
+        const body = {name, email, password, rol}
 
         const dataUser = await usersModel.create(body)
         dataUser.set('password', undefined, { strict: false })
