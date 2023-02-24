@@ -25,14 +25,14 @@ const registerCtrl = async (req, res) => {
 
 const loginCtrl = async (req, res) => {
     try{
-        req = matchedData(req)
-        const user = await usersModel.findOne({email: req.email}).select('password name email')
+        const {email, password} = req.body
+        const user = await usersModel.findOne({email: email}).select('password name email rol')
         if(!user){ 
             handleHttpError(res, "USUARIO INEXISTENTE", "", 401)
             return
         }
         const hashPassword = user.get('password')
-        const check = await compare(req.password, hashPassword)
+        const check = await compare(password, hashPassword)
         if(!check){
             handleHttpError(res, "CONTRASEÑA INVALIDA", "", 401)
             return
