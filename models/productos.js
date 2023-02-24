@@ -15,7 +15,7 @@ const ProductScheme = new mongoose.Schema(
     {
         timestamps: true,
         versionKey: false
-    } 
+    }
 )
 
 ProductScheme.statics.findAllData = async function(page = null, limit = null, categoria = null, titulo = null, precio = null) {
@@ -42,7 +42,7 @@ ProductScheme.statics.findAllData = async function(page = null, limit = null, ca
                 { path: 'colorsId', model: coloresModel },
                 { path: 'sizesId', model: sizesModel },
                 { path: 'imagesId', model: storagesModel }
-              ]
+            ]
         })
 
         /*if (precio) {
@@ -69,7 +69,7 @@ ProductScheme.statics.findOneData = async function(_id) {
                 { path: 'colorsId', model: coloresModel },
                 { path: 'sizesId', model: sizesModel },
                 { path: 'imagesId', model: storagesModel }
-              ]
+            ]
         })
     return product;
 }

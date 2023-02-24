@@ -3,12 +3,13 @@ const router = express.Router();
 const {validatorGetItem, validatorCreateItem} = require('../validators/productos.js')
 const {getItems, getItem, createItems, updateItems, deleteItems, getExcel} = require('../controllers/productos.js')
 const authMiddleware = require('../middleware/session.js')
+const checkRol = require('../middleware/rol.js')
 
 router.get('/', getItems)
 router.get('/:id', validatorGetItem, getItem)
-router.post('/', authMiddleware, validatorCreateItem, createItems)
-router.put('/:id', authMiddleware, validatorGetItem, updateItems)
-router.delete('/:id', authMiddleware, validatorGetItem, deleteItems)
-router.get('/excel/precios', getExcel)
+router.post('/', authMiddleware, checkRol, validatorCreateItem, createItems)
+router.put('/:id', authMiddleware, checkRol, validatorGetItem, updateItems)
+router.delete('/:id', authMiddleware, checkRol, validatorGetItem, deleteItems)
+router.get('/excel/precios', authMiddleware, checkRol, getExcel)
 
 module.exports = router

@@ -52,7 +52,7 @@ const loginUpdateCtrl = async (req, res) => {
     try{
         req = matchedData(req)
         const password = await encrypt(req.password)
-        const body = {...req, password}
+        const body = {password}
         const user = await usersModel.findOneAndUpdate(req.email, body, {new: true})
         if(!user){ 
             handleHttpError(res, "USUARIO INEXISTENTE", "", 401)

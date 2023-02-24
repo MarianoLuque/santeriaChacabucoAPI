@@ -36,7 +36,6 @@ const createItems = async (req, res) => {
                 url: `${PUBLIC_URL}/${pic.filename}`,
                 filename: pic.filename,
             };
-            //saveImage(pic.filename)
             response.push(await storageModel.create(body));
         }
         res.send({ response })
