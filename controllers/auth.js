@@ -9,10 +9,10 @@ const registerCtrl = async (req, res) => {
         const{name, email, rol} = req.body
         const password = await encrypt(req.body.password)
         const body = {name, email, password, rol}
-
+        
         const dataUser = await usersModel.create(body)
         dataUser.set('password', undefined, { strict: false })
-    
+        
         const data = {
             user: dataUser
         }
@@ -45,7 +45,7 @@ const loginCtrl = async (req, res) => {
         res.send({data})
 
     }catch (error) {
-        handleHttpError(res, "ERROR DE LOGIN", error, 401)
+        handleHttpError(res, "ERROR DE LOGIN", error, 500)
     }
 }
 const loginUpdateCtrl = async (req, res) => {
@@ -66,7 +66,7 @@ const loginUpdateCtrl = async (req, res) => {
         res.send({data})
 
     }catch (error) {
-        handleHttpError(res, "ERROR DE ACTUALIZACION DE USUARIO", error, 401)
+        handleHttpError(res, "ERROR DE ACTUALIZACION DE USUARIO", error, 500)
     }
 }
 
