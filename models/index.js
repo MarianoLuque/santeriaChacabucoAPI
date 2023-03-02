@@ -6,5 +6,6 @@ const coloresModel = require("./colores.js")
 const sizesModel = require("./sizes.js")
 const variantesModel = require("./variantes.js")
 const atributosModel = require("./atributos.js")
+const atributosTypesModel = require("./atributosTypes.js")
 
-module.exports = {productosModel, usersModel, categoriasModel, storageModel, coloresModel, sizesModel, variantesModel, atributosModel}
+module.exports = {productosModel, usersModel, categoriasModel, storageModel, coloresModel, sizesModel, variantesModel, atributosModel, atributosTypesModel}
