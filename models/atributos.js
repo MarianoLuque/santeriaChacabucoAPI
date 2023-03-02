@@ -11,4 +11,24 @@ const AtributesScheme = new mongoose.Schema(
         versionKey: false
     } 
 )
+
+AtributesScheme.statics.findAllData = async function() {
+    let category = await this.find({})
+        .populate({
+            path: 'type',
+            model: "atributosTypes"
+        })
+    return category
+}
+
+AtributesScheme.statics.findOneData = async function(_id) {
+
+    const category = await this.findOne({ _id })
+        .populate({
+            path: 'type',
+            model: "atributosTypes"
+        })
+    return category;
+}
+
 module.exports = mongoose.model("atributos", AtributesScheme)

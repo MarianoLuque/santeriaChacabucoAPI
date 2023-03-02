@@ -4,7 +4,7 @@ const {handleHttpError} = require('../utils/handleError.js')
 
 const getItems = async (req, res) => {
     try {
-        const data = await atributosModel.find({})
+        const data = await atributosModel.findAllData()
         res.send({data})
     } catch (err) {
         handleHttpError(res, 'ERROR GET ATRIBUTOS', err, 500)
@@ -14,7 +14,7 @@ const getItem = async (req, res) => {
     try {
         req = matchedData(req)
         const {id} = req
-        const data = await atributosModel.findById({_id: id})
+        const data = await atributosModel.findOneData(id)
         res.send({data})
     } catch (err) {
         handleHttpError(res, 'ERROR GET ATRIBUTO', err, 500)
