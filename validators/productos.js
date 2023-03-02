@@ -13,8 +13,7 @@ const validatorGetItem = [
 
 const validatorCreateItem = [
     check('title')
-    .exists()
-    .notEmpty(),
+    .exists(),
     check('categoryId')
     .exists()
     .notEmpty(),

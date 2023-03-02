@@ -7,9 +7,9 @@ const sizesModel = require("./sizes.js")
 
 const ProductScheme = new mongoose.Schema(
     {
-        title:          {type: String, required: true},
+        title:          {type: String, default:"Producto sin nombre"},
         description:    {type: String, required: false},
-        categoryId:     {type: mongoose.Types.ObjectId, ref: 'categorias', required: true},
+        categoryId:     {type: [mongoose.Types.ObjectId], ref: 'categorias', required: true},
         variants:       {type: [mongoose.Types.ObjectId], ref: 'variantes', required: false}
     },
     {
@@ -33,7 +33,12 @@ ProductScheme.statics.findAllData = async function(page = null, limit = null, ca
     let product = await this.find(match, null, options)
         .populate({
             path: 'categoryId',
-            model: categoriasModel
+            model: categoriasModel,
+            populate: [
+                { path: 'subcategories', model: categoriasModel, populate: [
+                    { path: 'subcategories', model: categoriasModel}
+                ] }
+            ]
         })
         .populate({
             path: 'variants',
@@ -60,7 +65,12 @@ ProductScheme.statics.findOneData = async function(_id) {
     const product = await this.findOne({ _id })
         .populate({
             path: 'categoryId',
-            model: categoriasModel
+            model: categoriasModel,
+            populate: [
+                { path: 'subcategories', model: categoriasModel, populate: [
+                    { path: 'subcategories', model: categoriasModel}
+                ] }
+            ]
         })
         .populate({
             path: 'variants',

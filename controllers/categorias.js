@@ -4,7 +4,7 @@ const {handleHttpError} = require('../utils/handleError.js')
 
 const getItems = async (req, res) => {
     try {
-        const data = await categoriasModel.find({})
+        const data = await categoriasModel.findAllData({})
         res.send({data})
     } catch (err) {
         handleHttpError(res, 'ERROR GET CATEGORIAS', err, 500)
@@ -14,7 +14,7 @@ const getItem = async (req, res) => {
     try {
         req = matchedData(req)
         const {id} = req
-        const data = await categoriasModel.findById({_id: id})
+        const data = await categoriasModel.findOneData(id)
         res.send({data})
     } catch (err) {
         handleHttpError(res, 'ERROR GET CATEGORIA', err, 500)
@@ -23,7 +23,9 @@ const getItem = async (req, res) => {
 }
 const createItems = async (req, res) => {
     try {
-        const body = matchedData(req)
+        const {subcategories} = req.body
+        const {name} = matchedData(req)
+        const body = {name, subcategories}
         const data = await categoriasModel.create(body)
         res.send({data})
     } catch (err) {
@@ -32,7 +34,9 @@ const createItems = async (req, res) => {
 }
 const updateItems = async (req, res) => {
     try {
-        const {id, ...body} = matchedData(req)
+        const {name, subcategories} = req.body
+        const body =  {name, subcategories}
+        const {id} = req.params
         const data = await categoriasModel.findOneAndUpdate({_id: id}, body, {new: true})
         res.send({data})
     } catch (err) {
