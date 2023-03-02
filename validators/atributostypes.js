@@ -5,6 +5,9 @@ const validatorCreateItem = [
     check('name')
     .exists()
     .notEmpty(),
+    check('visualizationType')
+    .exists()
+    .notEmpty(),
     (req, res, next) => {
         return validateResults(req, res, next)
     }
