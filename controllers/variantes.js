@@ -4,7 +4,7 @@ const {handleHttpError} = require('../utils/handleError.js')
 
 const getItems = async (req, res) => {
     try {
-        const data = await variantesModel.find({})
+        const data = await variantesModel.findAllData()
         res.send({data})
     } catch (err) {
         handleHttpError(res, 'ERROR GET VARIANTES', err, 500)
@@ -13,7 +13,7 @@ const getItems = async (req, res) => {
 const getItem = async (req, res) => {
     try {
         const {id} = req.params
-        const data = await variantesModel.findById({_id: id})
+        const data = await variantesModel.findOneData(id)
         res.send({data})
     } catch (err) {
         handleHttpError(res, 'ERROR GET VARIANTE', err, 500)
@@ -21,8 +21,8 @@ const getItem = async (req, res) => {
 }
 const createItems = async (req, res) => {
     try {
-        const {colorsId, sizesId, imagesId, price} = req.body
-        const body = {colorsId, sizesId, imagesId, price}
+        const {atributes, imagesId, price} = req.body
+        const body = {atributes, imagesId, price}
         const data = await variantesModel.create(body)
         res.send({data})
     } catch (err) {
@@ -32,8 +32,8 @@ const createItems = async (req, res) => {
 const updateItems = async (req, res) => {
     try {
         const {id} = req.params
-        const {colorsId, sizesId, imagesId, price} = req.body
-        const body = {colorsId, sizesId, imagesId, price}
+        const {atributes, imagesId, price} = req.body
+        const body = {atributes, imagesId, price}
         const data = await variantesModel.findOneAndUpdate({_id: id}, body, {new: true})
         res.send({data})
     } catch (err) {

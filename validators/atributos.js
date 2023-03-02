@@ -2,10 +2,10 @@ const {check} = require('express-validator')
 const validateResults = require('../utils/handleValidator.js')
 
 const validatorCreateItem = [
-    check('name')
+    check('value')
     .exists()
     .notEmpty(),
-    check('values')
+    check('type')
     .exists()
     .notEmpty(),
     (req, res, next) => {

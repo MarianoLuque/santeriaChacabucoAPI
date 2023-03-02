@@ -44,8 +44,7 @@ ProductScheme.statics.findAllData = async function(page = null, limit = null, ca
             path: 'variants',
             model: variantesModel,
             populate: [
-                { path: 'colorsId', model: coloresModel },
-                { path: 'sizesId', model: sizesModel },
+                { path: 'atributes', model: "atributos" },
                 { path: 'imagesId', model: storagesModel }
             ]
         })
@@ -76,8 +75,7 @@ ProductScheme.statics.findOneData = async function(_id) {
             path: 'variants',
             model: variantesModel,
             populate: [
-                { path: 'colorsId', model: coloresModel },
-                { path: 'sizesId', model: sizesModel },
+                { path: 'atributes', model: "atributos" },
                 { path: 'imagesId', model: storagesModel }
             ]
         })

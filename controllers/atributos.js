@@ -24,7 +24,7 @@ const getItem = async (req, res) => {
 const createItems = async (req, res) => {
     try {
         const {value, type} = matchedData(req)
-        const {description} = body.req
+        const {description} = req.body
         const body = {value, type, description}
         const data = await atributosModel.create(body)
         res.send({data})
@@ -36,7 +36,7 @@ const createItems = async (req, res) => {
 const updateItems = async (req, res) => {
     try {
         const {value, type} = matchedData(req)
-        const {description} = body.req
+        const {description} = req.body
         const body = {value, type, description}
         const {id} =  req.params
         const data = await atributosModel.findOneAndUpdate({_id: id}, body, {new: true})

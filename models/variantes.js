@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
-const variantSchema = new mongoose.Schema(
+const VariantSchema = new mongoose.Schema(
     {
-        atributos: {
+        atributes: {
             type: [mongoose.Types.ObjectId],
-            ref: "atributo",
+            ref: "atributos",
             required: false,
         },
         imagesId: {
@@ -20,5 +20,34 @@ const variantSchema = new mongoose.Schema(
     }
 );
 
+VariantSchema.statics.findAllData = async function() {
+    let category = await this.find({})
+        .populate({
+            path: 'atributes',
+            model: "atributos",
+        })
+        .populate({
+            path: 'imagesId',
+            model: "storages",
+        })
+    
+    return category
+}
 
-module.exports = mongoose.model("variantes", variantSchema);
+VariantSchema.statics.findOneData = async function(_id) {
+
+    const category = await this.findOne({ _id })
+        .populate({
+            path: 'atributes',
+            model: "atributos",
+        })
+        .populate({
+            path: 'imagesId',
+            model: "storages",
+        })
+    return category;
+}
+
+
+
+module.exports = mongoose.model("variantes", VariantSchema);
