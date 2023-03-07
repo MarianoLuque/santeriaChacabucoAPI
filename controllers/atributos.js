@@ -23,10 +23,13 @@ const getItem = async (req, res) => {
 }
 const createItems = async (req, res) => {
     try {
-        const {value, type} = matchedData(req)
-        const {description} = req.body
-        const body = {value, type, description}
-        const data = await atributosModel.create(body)
+        const {atributos} = matchedData(req)
+        const data = []
+        for(const atributo of atributos) {
+            let body = atributo
+            const atributoData = await atributosModel.create(body)
+            data.push(atributoData)
+        }
         res.send({data})
     } catch (err) {
         console.log(err)
@@ -47,11 +50,16 @@ const updateItems = async (req, res) => {
 }
 const deleteItems = async (req, res) => {
     try {
-        req = matchedData(req)
-        const {id} = req
-        const data = await atributosModel.findByIdAndDelete({_id: id})
+        const {atributos} = matchedData(req)
+        console.log(atributos)
+        const data = []
+        for(const atributo of atributos){
+            const atributoData = await atributosModel.findByIdAndDelete({_id: atributo._id})
+            data.push(atributoData)
+        }
         res.send({data})
     } catch (err) {
+        console.log(err)
         handleHttpError(res, 'ERROR DELETE ATRIBUTO', err, 500)
     }
 }
