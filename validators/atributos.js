@@ -13,6 +13,7 @@ const validatorCreateItem = [
             }
         });
         return true;
+        
     }),
     (req, res, next) => {
         return validateResults(req, res, next)
