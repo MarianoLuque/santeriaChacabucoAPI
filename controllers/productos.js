@@ -25,8 +25,8 @@ const getItem = async (req, res) => {
 const createItems = async (req, res) => {
     try {
         const {title, categoryId} = matchedData(req)
-        const {description} = req.body
-        const body = {title, description, categoryId}
+        const {description, variants} = req.body
+        const body = {title, description, categoryId, variants}
         console.log(body)
         const data = await productosModel.create(body)
         res.send({data})
