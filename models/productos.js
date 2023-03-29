@@ -8,7 +8,7 @@ const sizesModel = require("./sizes.js")
 const ProductScheme = new mongoose.Schema(
     {
         title:          {type: String, default:"Producto sin nombre"},
-        description:    {type: String, required: false},
+        description:    {type: String, required: false, },
         categoryId:     {type: [mongoose.Types.ObjectId], ref: 'categorias', required: true},
         variants:       {type: [mongoose.Types.ObjectId], ref: 'variantes', required: false}
     },
