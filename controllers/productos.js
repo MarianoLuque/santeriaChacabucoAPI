@@ -59,13 +59,11 @@ const deleteItems = async (req, res) => {
         req = matchedData(req);
         const { id } = req;
         const data = await productosModel.findByIdAndDelete(id);
-        console.log(data);
         const variantStrings = data.variants.map((variant) =>
             variant.toString()
         );
-        console.log(variantStrings)
         for (let i = 0; i < variantStrings.length; i++) {
-            await variantesModel.findByIdAndDelete(variantStrings[i])
+            await variantesModel.deleteOne({_id: variantStrings[i]})
         }
         res.send({ data });
     } catch (err) {
