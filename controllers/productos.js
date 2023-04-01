@@ -51,6 +51,9 @@ const deleteItems = async (req, res) => {
         req = matchedData(req)
         const {id} = req
         const data = await productosModel.findByIdAndDelete(id)
+        data.variants.forEach(variante => {
+            variantesModel.findByIdAndDelete(variante)
+        });
         res.send({data})
     } catch (err) {
         handleHttpError(res, 'ERROR DELETE PRODUCTOS', err, 500)
