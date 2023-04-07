@@ -16,7 +16,6 @@ const getItems = async (req, res) => {
     } catch (err) {
         handleHttpError(res, 'ERROR EN STORAGE GET ITEMS', err, 500)
     }
-    
 }
 const getItem = async (req, res) => {
     try {
@@ -31,6 +30,7 @@ const createItems = async (req, res) => {
     try{
         const file = req.files;
         let response = []
+        console.log(file)
         for(const pic of file) {
             const body = {
                 url: `${PUBLIC_URL}/${pic.filename}`,
@@ -43,7 +43,6 @@ const createItems = async (req, res) => {
         console.log(err)
         handleHttpError(res, 'ERROR EN STORAGE CREATE ITEM', err, 500)
     }
-        
 }
 const deleteItems = async (req, res) => {
     try {
