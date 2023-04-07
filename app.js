@@ -12,12 +12,6 @@ app.use(cors())
 app.use(json())
 app.use(express.static("storage"))
 
-// Middleware para aumentar el tiempo de espera
-app.use((req, res, next) => {
-    res.setTimeout(0); // Sin límite de tiempo de espera
-    next();
-});
-
 app.use('/api', router)
 app.use(function(req, res) {
     handleHttpError(res, "No se encontró un endpoint para esa ruta", 404);
