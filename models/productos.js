@@ -10,7 +10,13 @@ const ProductScheme = new mongoose.Schema(
         title:          {type: String, default:"Producto sin nombre"},
         description:    {type: String, required: false, },
         categoryId:     {type: [mongoose.Types.ObjectId], ref: 'categorias', required: true},
-        variants:       {type: [mongoose.Types.ObjectId], ref: 'variantes', required: false}
+        variants:       {type: [mongoose.Types.ObjectId], ref: 'variantes', required: false},
+        imageId: {
+            type: [mongoose.Types.ObjectId],
+            ref: "storages",
+            required: false,
+        },
+        price: { type: Number, required: false },
     },
     {
         timestamps: true,

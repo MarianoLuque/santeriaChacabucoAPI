@@ -31,8 +31,8 @@ const getItem = async (req, res) => {
 const createItems = async (req, res) => {
     try {
         const { title, categoryId } = matchedData(req);
-        const { description, variants } = req.body;
-        const body = { title, description, categoryId, variants };
+        const { description, variants, imageId, price } = req.body;
+        const body = { title, description, categoryId, variants, imageId, price };
         const data = await productosModel.create(body);
         res.send({ data });
     } catch (err) {
@@ -43,8 +43,8 @@ const createItems = async (req, res) => {
 const updateItems = async (req, res) => {
     try {
         const { id } = req.params;
-        const { title, description, categoryId, variants } = req.body;
-        body = { title, description, categoryId, variants };
+        const { title, description, categoryId, variants, imageId, price } = req.body;
+        body = { title, description, categoryId, variants, imageId, price };
         const data = await productosModel.findOneAndUpdate({ _id: id }, body, {
             new: true,
             upsert: false,
