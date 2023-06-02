@@ -11,12 +11,8 @@ const ProductScheme = new mongoose.Schema(
         description:    {type: String, required: false, },
         categoryId:     {type: [mongoose.Types.ObjectId], ref: 'categorias', required: true},
         variants:       {type: [mongoose.Types.ObjectId], ref: 'variantes', required: false},
-        imageId: {
-            type: [mongoose.Types.ObjectId],
-            ref: "storages",
-            required: false,
-        },
-        price: { type: Number, required: false },
+        imagesId:       {type: [mongoose.Types.ObjectId], ref: "storages", required: false},
+        price:          {type: Number, required: false },
     },
     {
         timestamps: true,
@@ -45,6 +41,10 @@ ProductScheme.statics.findAllData = async function(page = null, limit = null, ca
                     { path: 'subcategories', model: categoriasModel}
                 ] }
             ]
+        })
+        .populate({
+            path: 'imagesId',
+            model: storagesModel
         })
         .populate({
             path: 'variants',
@@ -78,6 +78,10 @@ ProductScheme.statics.findOneData = async function(_id) {
                     { path: 'subcategories', model: categoriasModel}
                 ] }
             ]
+        })
+        .populate({
+            path: 'imagesId',
+            model: storagesModel
         })
         .populate({
             path: 'variants',
