@@ -25,6 +25,12 @@ VariantSchema.statics.findAllData = async function() {
         .populate({
             path: 'atributes',
             model: "atributos",
+            populate: [
+                { path: 'atributes', model: "atributos" , populate: [
+                    { path: 'type', model: "atributosTypes"}
+                ]},
+                { path: 'imagesId', model: storagesModel }
+            ]
         })
         .populate({
             path: 'imagesId',
