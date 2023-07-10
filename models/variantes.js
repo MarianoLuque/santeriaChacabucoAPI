@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const storagesModel = require("./storage.js")
 
 const VariantSchema = new mongoose.Schema(
     {
@@ -26,10 +27,7 @@ VariantSchema.statics.findAllData = async function() {
             path: 'atributes',
             model: "atributos",
             populate: [
-                { path: 'atributes', model: "atributos" , populate: [
-                    { path: 'type', model: "atributosTypes"}
-                ]},
-                { path: 'imagesId', model: storagesModel }
+                { path: 'type', model: "atributosTypes"},
             ]
         })
         .populate({
@@ -47,10 +45,7 @@ VariantSchema.statics.findOneData = async function(_id) {
             path: 'atributes',
             model: "atributos",
             populate: [
-                { path: 'atributes', model: "atributos" , populate: [
-                    { path: 'type', model: "atributosTypes"}
-                ]},
-                { path: 'imagesId', model: storagesModel }
+                { path: 'type', model: "atributosTypes"},
             ]
         })
         .populate({
@@ -59,7 +54,5 @@ VariantSchema.statics.findOneData = async function(_id) {
         })
     return category;
 }
-
-
 
 module.exports = mongoose.model("variantes", VariantSchema);

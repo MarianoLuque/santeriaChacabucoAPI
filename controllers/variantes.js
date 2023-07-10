@@ -7,6 +7,7 @@ const getItems = async (req, res) => {
         const data = await variantesModel.findAllData()
         res.send({data})
     } catch (err) {
+        console.log(err)
         handleHttpError(res, 'ERROR GET VARIANTES', err, 500)
     }
 }
